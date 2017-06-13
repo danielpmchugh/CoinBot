@@ -15,9 +15,6 @@ def main():
   historical = GDAXHistorical()
   timeSeries = historical.BuildTimeSeries(datetime.datetime(2017, 1, 1, 0, 0), datetime.datetime(2017, 6, 11, 0, 0), 3000, 'ETH-USD')
 
-
-
-
 def printCurrentState():  
   printRow('Product', getStats().keys())
   products = {'ETH-USD', 'BTC-USD', 'LTC-USD'}    

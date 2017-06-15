@@ -1,6 +1,6 @@
 from enum import Enum
 
-class MarketSignal(Enum):
+class TypeMarketSignal(Enum):
     """Possible Market Signals"""
     StrongSell = 1
     Sell = 2

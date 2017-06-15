@@ -1,6 +1,4 @@
-from interface import Interface
-
-class Signal(Interface):
+class Signal(object):
     """Interace for classes to define a signal"""
 
     def AddNewCandleStick(self, candleStick):
@@ -8,5 +6,3 @@ class Signal(Interface):
 
     def GetMarketSignal(self):
         pass
-
-

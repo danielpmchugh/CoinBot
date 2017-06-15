@@ -25,10 +25,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CoinBot.py" />
+    <Compile Include="Signals\MomentumSignal.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Signals\Signal.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Signals\MarketSignal.py">
+    <Compile Include="Signals\TypeMarketSignal.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Signals\__init__.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

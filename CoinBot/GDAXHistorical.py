@@ -1,5 +1,6 @@
 import GDAX
 from datetime import timedelta
+import time
 
 class GDAXHistorical(object):
   """Class will contain function to query historical data from GDAX"""
@@ -11,7 +12,7 @@ class GDAXHistorical(object):
 
     #gdax must break call out by 200 candles/groups
 
-    historicalRates = []
+    historicalRates = {}
     maxCandles = 200
     windowStart = start
     while (windowStart < end):
@@ -20,7 +21,10 @@ class GDAXHistorical(object):
             windowEnd = end
         print("Requesting candles between %s and %s" % (windowStart, windowEnd))
         windowHistoricalRates = publicClient.getProductHistoricRates(granularity=granularity, start=windowStart, end=windowEnd)
-        historicalRates.extend(windowHistoricalRates)
+        time.sleep(1)
+        windowHistoricalRatesDict = { int(k[0]): dict(zip(['low','high','open','close','volume'], k[1:])) for k in windowHistoricalRates }
+        historicalRates.update(windowHistoricalRatesDict)
         windowStart += timedelta(0, granularity * maxCandles)
+    return historicalRates
 
         

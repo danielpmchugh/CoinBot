@@ -21,10 +21,14 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GDAXHistorical.py">
+    <Compile Include="MarketData\GDAXMarketData.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CoinBot.py" />
+    <Compile Include="MarketData\MarketData.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MarketData\__init__.py" />
     <Compile Include="Signals\MomentumSignal.py">
       <SubType>Code</SubType>
     </Compile>
@@ -37,9 +41,23 @@
     <Compile Include="Signals\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tests\BackTests.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\Mock\GDAXMarketDataMock.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\Mock\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="MarketData\" />
+    <Folder Include="Tests\" />
     <Folder Include="Signals\" />
+    <Folder Include="Tests\CannedData\" />
+    <Folder Include="Tests\Mock\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Tests\CannedData\Mockdata.json" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

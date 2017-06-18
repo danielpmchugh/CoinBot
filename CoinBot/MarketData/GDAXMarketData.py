@@ -1,8 +1,9 @@
 import GDAX
 from datetime import timedelta
+from MarketData.MarketData import MarketData
 import time
 
-class GDAXHistorical(object):
+class GDAXMarketData(MarketData):
   """Class will contain function to query historical data from GDAX"""
   
   def BuildTimeSeries(self, start, end, granularity, product='BTC-USD'):
@@ -27,4 +28,5 @@ class GDAXHistorical(object):
         windowStart += timedelta(0, granularity * maxCandles)
     return historicalRates
 
-        
+def __init__(self):
+    Base.__init__(self)        

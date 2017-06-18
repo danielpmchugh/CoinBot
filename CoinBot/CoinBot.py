@@ -26,15 +26,18 @@ def main():
       TypeMarketSignal.Sell: -1,
       TypeMarketSignal.StrongSell: -2}
 
-  start = 100000
+  start = 100
   wallet = start
   position = 0
-
-  
+    
   cnt = 0
-  for key, point in sorted(timeSeries.items()):
+  pointItems = sorted(timeSeries.items())
+  pointList = list(pointItems)
+  firstPoint = pointItems[0][1]
+  
+  for key, point in pointItems:
       if cnt % 20 == 0:
-          printRow('Balance', ['UnrealizedGains', 'TotalValue', 'Gain', 'Position', 'TradeIncrement', 'Close'])
+          printRow('TotalValue', [ 'Gain', 'BenchmarkGain', 'Gain %', 'Benchmark Gain %', 'Diff %', 'Price'])      
       cnt = cnt + 1
       momentumSignal.AddNewCandleStick(point)
       tradeIncrement = tradeIncrements[momentumSignal.GetMarketSignal()]      
@@ -43,23 +46,28 @@ def main():
           
       cost = tradeIncrement * point['close']
       if cost > wallet:
-          print("No More money :(.")
-          break
+          tradeIncrement = 0
+          cost = 0
+          print("No More money :(.")          
 
       wallet = wallet - cost
       position = position + tradeIncrement      
       unrealizedGains = position * point['close']
       totalvalue = wallet + unrealizedGains
       gain = totalvalue - start
+      gainPct = gain / start
+      benchmarkTotalValue = (start / firstPoint['close']) * point['close']
+      benchmarkGain = benchmarkTotalValue - start
+      benchmarkGainPct = benchmarkGain/ start
+      diffPct = gainPct - benchmarkGainPct 
       print('{:>17}{:>17}{:>17}{:>17}{:>17}{:>17}{:>17}'.format(
-          '{0:.2f}'.format(wallet),           
-          '{0:.2f}'.format(unrealizedGains), 
           '{0:.2f}'.format(totalvalue), 
-          '{0:.2f}'.format(gain), 
-          position, 
-          tradeIncrement, 
-          '{0:.2f}'.format(point['close'])), )
-      
+          '{0:.2f}'.format(gain),
+          '{0:.2f}'.format(benchmarkGain),
+          '{0:.2f}'.format(gainPct),          
+          '{0:.2f}'.format(benchmarkGainPct),          
+          '{0:.2f}'.format(diffPct),
+          '{0:.2f}'.format(point['close'])))            
 
 def printCurrentState():  
   printRow('Product', getStats().keys())

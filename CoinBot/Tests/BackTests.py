@@ -9,9 +9,9 @@ from Signals.TypeMarketSignal import TypeMarketSignal
 
 class Test_BackTests(unittest.TestCase):
     def test_backtest(self):
-        marketDataMock = GDAXMarketDataMock(False)
-        timeSeries = marketDataMock.BuildTimeSeries(datetime.datetime(2017, 1, 11, 0, 0), datetime.datetime(2017, 6, 14, 0, 0), 3000, 'ETH-USD') 
 
+        marketData = GDAXMarketDataMock(datetime.datetime(2017, 1, 11, 0, 0), datetime.datetime(2017, 6, 14, 0, 0), 3000, 'ETH-USD', False)
+        
         momentumSignal = MomentumSignal()
   
         tradeIncrements = {
@@ -26,11 +26,15 @@ class Test_BackTests(unittest.TestCase):
         position = 0
     
         cnt = 0
-        pointItems = sorted(timeSeries.items())
-        pointList = list(pointItems)
-        firstPoint = pointItems[0][1]
+        
+        firstPoint = None
   
-        for key, point in pointItems:
+        for point in marketData.GetNextCandle():                    
+            if firstPoint == None:
+               firstPoint = point
+            #   TODO: Process Signals
+            #   TODO: Analyzer Read Signals / output confidence matrix
+            #   TODO: Strategy Read confidence matrix and return exectuion instructions
             if cnt % 20 == 0:
                 self.printRow('TotalValue', [ 'Gain', 'BenchmarkGain', 'Gain %', 'Benchmark Gain %', 'Diff %', 'Price'])      
             cnt = cnt + 1
@@ -63,6 +67,7 @@ class Test_BackTests(unittest.TestCase):
                 '{0:.2f}'.format(benchmarkGainPct),          
                 '{0:.2f}'.format(diffPct),
                 '{0:.2f}'.format(point['close'])))            
+        
             
     def printRow(self, key, values):
         row_format = "{:>17}" * (len(values) + 1)

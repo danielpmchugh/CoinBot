@@ -55,6 +55,7 @@
     <Folder Include="Signals\" />
     <Folder Include="Tests\CannedData\" />
     <Folder Include="Tests\Mock\" />
+    <Folder Include="Tests\Output\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Tests\CannedData\Mockdata.json" />

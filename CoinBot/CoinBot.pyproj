@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bf8a505f-aa6b-4a8a-8acd-679401d0e511</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>CoinBot.py</StartupFile>
+    <StartupFile>Tests\BackTests.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -29,6 +29,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MarketData\__init__.py" />
+    <Compile Include="Models\Portfolio.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Signals\MomentumSignal.py">
       <SubType>Code</SubType>
     </Compile>
@@ -48,9 +51,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tests\Mock\__init__.py" />
+    <Compile Include="Utilities\StatusUtility.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utilities\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MarketData\" />
+    <Folder Include="Models\" />
+    <Folder Include="Utilities\" />
     <Folder Include="Tests\" />
     <Folder Include="Signals\" />
     <Folder Include="Tests\CannedData\" />

@@ -32,13 +32,11 @@
     <Compile Include="Models\Portfolio.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\__init__.py" />
     <Compile Include="Signals\MomentumSignal.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Signals\Signal.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Signals\TypeMarketSignal.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Signals\__init__.py">
@@ -51,6 +49,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tests\Mock\__init__.py" />
+    <Compile Include="Tests\__init__.py" />
     <Compile Include="Utilities\StatusUtility.py">
       <SubType>Code</SubType>
     </Compile>

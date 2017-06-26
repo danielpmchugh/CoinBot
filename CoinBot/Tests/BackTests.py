@@ -1,66 +1,64 @@
+""" Module for backtests """
+
 import unittest
-import time
 import datetime
-from MarketData.GDAXMarketData import GDAXMarketData
 from Tests.Mock.GDAXMarketDataMock import GDAXMarketDataMock
 from Signals.MomentumSignal import MomentumSignal
-from Signals.TypeMarketSignal import TypeMarketSignal
 from Models.Portfolio import Portfolio
 from Utilities.StatusUtility import StatusUtility
 
-class Test_BackTests(unittest.TestCase):
-    def test_backtest(self):
+class TestBackTests(unittest.TestCase):
+    """ Back test class """
+    @staticmethod
+    def test_back_test():
+        """ Method for backtesting """
+        market_data = GDAXMarketDataMock(
+            datetime.datetime(2017, 1, 11, 0, 0),
+            datetime.datetime(2017, 6, 14, 0, 0),
+            3000,
+            'ETH-USD',
+            False)
 
-        marketData = GDAXMarketDataMock(datetime.datetime(2017, 1, 11, 0, 0), datetime.datetime(2017, 6, 14, 0, 0), 3000, 'ETH-USD', False)
-        
-        momentumSignal = MomentumSignal()
-  
-        tradeIncrements = {
-            TypeMarketSignal.StrongBuy : 2,
-            TypeMarketSignal.Buy: 1,
-            TypeMarketSignal.Neutral: 0,
-            TypeMarketSignal.Sell: -1,
-            TypeMarketSignal.StrongSell: -2}
+        momentum_signal = MomentumSignal()
 
         start = 100
         wallet = start
         position = 0
-    
+
         portfolio = Portfolio(start)
         benchmark = Portfolio(start)
-        cnt = 0
-        
-        firstPoint = None
-  
-        for point in marketData.GetNextCandle():                    
-            if firstPoint == None:
+        first_point = None
+
+        for point in market_data .get_next_candle():
+            if first_point is None:
                 # Benchmark is fully allocated to ETC
-                benchmark.adjustCash(start * -1)
-                benchmark.adjustEtc(start / point['close'])
+                first_point = point
+                benchmark.adjust_cash(start * -1)
+                benchmark.adjust_etc(start / first_point['close'])
 
             #   TODO: Process Signals
-            momentumSignal.AddNewCandleStick(point)
-            
+            momentum_signal.add_new_candle_stick(point)
+
             #   TODO: Analyzer Read Signals / output confidence matrix
 
             #   TODO: Strategy Read confidence matrix and return exectuion instructions
-            tradeIncrement = tradeIncrements[momentumSignal.GetMarketSignal()]      
-            if tradeIncrement + position < 0:
-                tradeIncrement = 0
-          
-            #   TODO: Executor Update portfolio composition 
-            cost = tradeIncrement * point['close']
+            trade_increment = momentum_signal.get_market_signal() * 2
+            if trade_increment + position < 0:
+                trade_increment = 0
+
+            #   TODO: Executor Update portfolio composition
+            cost = trade_increment * point['close']
             if cost > wallet:
-                tradeIncrement = 0
+                trade_increment = 0
                 cost = 0
-                print("No More money :(.")          
-            
-            benchmark.etcPx = point['close']
-            portfolio.etcPx = point['close']
-            portfolio.adjustCash(cost * -1)
-            portfolio.adjustEtc(tradeIncrement)
-            
-            StatusUtility.print(portfolio, benchmark)                    
+                print("No More money :(.")
+
+            benchmark.etc_px = point['close']
+            portfolio.etc_px = point['close']
+            portfolio.adjust_cash(cost * -1)
+            portfolio.adjust_etc(trade_increment)
+
+            StatusUtility.print(portfolio, benchmark)
 
 if __name__ == '__main__':
     unittest.main()

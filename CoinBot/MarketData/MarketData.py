@@ -1,5 +1,10 @@
-class MarketData(object):
-    """Market Data """
+""" Base Module for MarketData """
 
-    def BuildTimeSeries(self, start, end, granularity, product):
+class MarketData(object):
+    """ Market Data """
+
+    # pylint: disable=too-few-public-methods
+
+    def build_times_series(self, start, end, granularity, product):
+        """ Method returns a series of candle sticks"""
         pass

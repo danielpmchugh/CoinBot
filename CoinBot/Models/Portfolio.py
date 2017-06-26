@@ -1,59 +1,80 @@
+""" Base Module for Portfolios """
+
 class Portfolio(object):
+    """ Module representing a portfolio """
+    # pylint: disable=too-many-instance-attributes
+    # Eight is reasonable in this case.
+
     def __init__(self, cash):
         self._cash = cash
-        self._initialValue = cash
-        self._etcQty = 0
-        self._btcQty = 0
-        self._ltcQty = 0
-        self._etcPx = 0
-        self._btcPx = 0
-        self._ltcPx = 0        
+        self._initial_value = cash
+        self._etc_qty = 0
+        self._btc_qty = 0
+        self._ltc_qty = 0
+        self._etc_px = 0
+        self._btc_px = 0
+        self._ltc_px = 0
 
-    def get_etcPx(self):
-        return self._etcPx
+    def get_etc_px(self):
+        """ get current ethereum price """
+        return self._etc_px
 
-    def set_etcPx(self, value):
-        self._etcPx = value
-            
-    def get_btcPx(self):
-        return self._btcPx
+    def set_etc_px(self, value):
+        """ set current ethereum price """
+        self._etc_px = value
 
-    def set_btcPx(self, value):
-        self._btcPx = value
+    def get_btc_px(self):
+        """ get current bitcoin price """
+        return self._btc_px
 
-    def get_ltcPx(self):
-        return self._ltcPx
+    def set_btc_px(self, value):
+        """ set current bitcoin price """
+        self._btc_px = value
 
-    def set_ltcPx(self, value):
-        self._ltcPx = value
+    def get_ltc_px(self):
+        """ get current litecoin price """
+        return self._ltc_px
 
-    etcPx = property(get_etcPx, set_etcPx)
-    btcPx = property(get_btcPx, set_btcPx)
-    ltcPx = property(get_ltcPx, set_ltcPx)    
+    def set_ltc_px(self, value):
+        """ set current litecoin price """
+        self._ltc_px = value
 
-    def adjustCash(self, amount):
+    etcPx = property(get_etc_px, set_etc_px)
+    btcPx = property(get_btc_px, set_btc_px)
+    ltcPx = property(get_ltc_px, set_ltc_px)
+
+    def adjust_cash(self, amount):
+        """ set current cash amount """
         self._cash = self.cash + amount
 
-    def adjustEtc(self, quantity):
-        self._etcQty = self._etcQty + quantity
-
+    def adjust_etc(self, quantity):
+        """ set current ethereum amount """
+        self._etc_qty = self._etc_qty + quantity
 
     @property
-    def unrealizedGains(self):
-        return self._etcQty * self._etcPx + self._btcQty * self._btcPx + self._ltcQty * self._ltcPx
+    def unrealized_gains(self):
+        """ returns unrealized gains of the portfolio """
+        etc_gains = self._etc_qty * self._etc_px
+        btc_gains = self._btc_qty * self._btc_px
+        ltc_gains = self._ltc_qty * self._ltc_px
+        return  etc_gains + btc_gains + ltc_gains
 
     @property
     def cash(self):
+        """ Get Cash value  """
         return self._cash
 
     @property
-    def currentValue(self):
-        return self.cash + self.unrealizedGains
+    def current_value(self):
+        """ get current portfolio value """
+        return self.cash + self.unrealized_gains
 
     @property
     def returns(self):
-        return self.currentValue - self._initialValue
+        """ get profit amount """
+        return self.current_value - self._initial_value
 
     @property
-    def yieldPct(self):
-        return self.returns / self._initialValue
+    def yield_pct(self):
+        """ get pct returned """
+        return self.returns / self._initial_value
